@@ -1,44 +1,51 @@
-# World_Weather_Analysis
+# Pewlett Hackard Analysis
 
-## Project
-This project uses collected weather data from over 500 cities around the world to create a PlanMyTrip app where the user can filter for their weather preferences to identify potential travel destinations and nearby hotels. Users can then choose four cities from these potential travel destinations and create a travel itinerary that includes a travel route between the four cities.
+## Project 
+This project uses uses six employee data tables from Pewlett Hackard to analyze the large number of employees approaching retirement age, the future staffing needs of the company, and possible proactive steps the company could take to prepare for the coming "silver tsunami".  
 
-## Tools used for this project
-The tools used for this project include Python and jupyter notebook: pandas, matplotlib, numpy, citipy, requests, gmaps; OpenWeather, Google Maps, and Google Places APIs.
+### Purpose 
+This analysis takes a deeper dive into 
+ - the group of employee approaching retirement age by looking at their job titles to assess the work groups that will be impacted by the retirements
+ - employees outside of the retirement group who could be eligible for a mentorship program to prepare them for the roles that will become vacant with the retirements 
 
-## Project process
+### Tools used for this project
+The tools used for this project include QuickDBD's ERD for database table planning, pgAdmin and PostgreSQL for database manipulation and table creation used in the analysis.
 
-### Identifying cities around the world
-A database of cities were generated using a random number generator to produce 2,000 pairs of latitude and longituded for both the northern and southern hemisphere. Using citipy, these lat/lon pairs were used to locate the city nearest to these points. The cities, along with the lat/lon pairs, were added to a dataframe. 
+## Overview of the analysis
+### Retiring employees by title
+Using an inner join between the employees table and the titles table, and filtering by a target age range based on birth dates, a new table was created that allows an analysis of the employees approaching retirement age with their job titles.  This table was then refined to remove duplicates and include only the job titles currently held by this group of retiring employees. Then the number of employees for each group were counted as shown in the table below.
+![Retiring employees by title](https://github.com/bnidam/Pewlett-Hackard-Analysis/blob/main/Resources/Retiring_count_by_title.png)
 
-### Retrieving weather data
-The city lat/lon pairs were used with an API call to OpenWeather.com to retrieve a list of specific weather data for each city. This weather data included maximum temperature, humidity, cloudiness, windspeed, and a description of current weather. The country was also identified. All of this information was saved in a dataframe, reorganized and saved in a csv file.
+### Mentorship eligibility
+A list of candidate employees with their titles and departments for a mentorship program was created in a new table Using an inner join between the employees table, the departments table, and the titles tables, then filtering by a target age range based on birth dates. 
 
-### User preferences
-Input boxes were created to collect the user's minimum and maximum temperature preferences.
+## Results
+From the two new tables, we know the following:
+ - From the total employees currently employed by Pewlett-Hackard, just under 25% of the workforce will reach retirement age in the next few years. 
+        Total employees                                 300,024
+        Employees approaching retirement age            72,458
+        % of total employees approaching retirement age 24.2%
 
-### Identifying potential travel destinations and nearby hotels
-The user's preferences were used to identify cities in the dataframe mentioned above that fit with the user's preferences. A set of basic parameters and a Google Maps API call were used to locate nearby hotels in those identified cities. These hotels and potential travel destinations were saved into a new dataframe. 
+ - While the bulk of the retirements will affect Senior positions, Engineers and Staff, there are only 2 Managers approaching retirement. 
 
-### Map of potential travel destinations with markers and info boxes
-A heatmap was created showing the potential travel destinations based on the user's preferences with markers and infoboxes showing the hotel name, city, maximum temperature, and current weather.
-![Cities Hotels Markers Infoboxes](https://github.com/bnidam/World_Weather_Analysis/blob/main/Vacation_Search/WeatherPy_vacation_map_infobox.png)
+ - Only 1,549 employees meet the mentorship program criteria.
 
-### Travel itinerary
-A travel itinerary was also created from a selection of four relatively nearby cites, showing the travel route by driving.  This map also has markers and infoboxes with the same information as above.
-The example in this project shows a travel destination to Sri Lanka and an excursion to four cities along the southern coast.
-![Travel Itinerary in Sri Lanka](https://github.com/bnidam/World_Weather_Analysis/blob/main/Vacation_Itinerary/weatherPy_travel_map1.png)
+ - If every employee who meets the mentorship program actually completes the program and steps into a role being vacated by retirement, this would only fill 2.1% of these positions, leaving just under  71,000 positions open. 
 
+## Summary
+By creating a new table showing the breakdown of the 1,549 employees that meet the mentorship program criteria by title (shown below), 
+![mentorship program employees by title](https://github.com/bnidam/Pewlett-Hackard-Analysis/blob/main/Resources/mentor_count_by_title.png)
 
+we can combine these numbers with the retiring employees by title table (shown above) to do some analysis.
+![Employees retiring and mentorship program by title](https://github.com/bnidam/Pewlett-Hackard-Analysis/blob/main/Resources/Comb_retirecount_mentorcount_title.png)
 
+We've already determined that 72,458, or 24.2%, positions are currently held by employees approaching retirement. Replacing this number of employees will have an enormous impact on Pewlett-Hackard.
 
+Half (50%) of the employees approaching retirement age are engineers (36,291): Senior Engineers, Engineers, and Assistant Engineers by title. Senior Engineers make up 71% of all engineers approaching retirement. Staff positions are second largest group approaching retirement age, numbering 32,562 or 45%. Senior Staff makes up 76.5% of all staff approaching retirement. 
 
+Let's consider the engineers that meet the mentorship criteria and already have the same job titles. Senior Engineers will fill less than 1% of the Senior Engineer positions that will become vacant through retirement, leaving 99.3% of those positions open. The outlook for Engineers and Assistant Engineers is similar. Even if Engineers and Assistant Engineers can move up through the mentorship program to Senior Engineers, this will still leave 25,168 Senior Engineer positions open and create more positions to fill at the Engineer and Assistant Engineer level. Staff positions are in a similar situation with fewer mentorship program eligible employees than retirement openings to fill.
 
-
-
-
-
-
+The ratio of employees of all titles to mentor the employees identified for the mentorship program is very high: 46.8 to 1. For the 2 largest groups, Senior Engineers and Senior Staff, the ratios of retirement-ready to program mentee are also quite high at 34.6 to 1 and 34.4 to 1. There should be enough retirement-ready employees to mentor the next generation, as well as some new hires.
 
 
 
